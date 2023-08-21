@@ -26,3 +26,12 @@
 #login-page form input, #login-page form button {
     height: 32px;
 }
+
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.error-message-hidden {
+    display: none;
+}

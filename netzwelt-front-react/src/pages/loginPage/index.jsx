@@ -10,6 +10,7 @@ const LoginPage = () => {
     }
 
     const [authData, setAuthData] = useState({ ...DEFAULT_AUTH_DATA });
+    const [showErrorMsg, setShowErrorMsg] = useState(false);
 
     const { login, isAuthenticated } = useAuthenticationContext();
 
@@ -26,7 +27,7 @@ const LoginPage = () => {
         if (isAuthenticated()) {
             navigate(from, { replace: true });
         }
-    });
+    }, [from, isAuthenticated, navigate]);
 
     const __on_submit__ = (e) => {
         e.preventDefault();
@@ -34,6 +35,9 @@ const LoginPage = () => {
             if (!err) {
                 // redirect to homepage or to previous link
                 navigate(from, { replace: true });
+                setShowErrorMsg(false);
+            } else {
+                setShowErrorMsg(true);
             }
         });
     }
@@ -66,6 +70,7 @@ const LoginPage = () => {
                     onChange={__on_change__}
                 />
                 <button>login</button>
+                <p className={`error-message ${showErrorMsg ? '' : 'error-message-hidden'}`}>Invalid username or password</p>
             </form>
         </div>
     );
