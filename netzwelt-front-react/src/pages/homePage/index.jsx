@@ -56,7 +56,7 @@ const HomePage = () => {
 
     useEffect(() => {
         // fetch territories lists from backend
-        axios.get('http://localhost:8080/territories/').then((resp) => {
+        axios.get('https://netzwelt-technical-server.onrender.com/territories/').then((resp) => {
             setTerritories(resp.data);
         });
     }, []);
