@@ -1,0 +1,28 @@
+#login-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-page form {
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+    border: 3px solid rgb(66, 66, 66);
+    padding: 3rem;
+}
+
+#login-page form input {
+    margin-bottom: 1.5rem;
+}
+
+#login-page form button {
+    width: 6rem;
+    margin-left: auto;
+}
+
+#login-page form input, #login-page form button {
+    height: 32px;
+}
