@@ -59,6 +59,7 @@ const LoginPage = () => {
                     type="text"
                     placeholder="Username"
                     name="username"
+                    value={authData.username}
                     onChange={__on_change__}
                 />
                 <label htmlFor="password-input">Password</label>
@@ -67,6 +68,7 @@ const LoginPage = () => {
                     type="password"
                     placeholder="Password"
                     name="password"
+                    value={authData.password}
                     onChange={__on_change__}
                 />
                 <button>login</button>
