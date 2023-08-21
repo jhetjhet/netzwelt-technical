@@ -23,7 +23,7 @@ function App() {
               <HomePage />
             </PrivateRoute>
           } path="/home/index/" />
-          <Route element={<LoginPage />} path="/login/" />
+          <Route element={<LoginPage />} path="/account/login/" />
         </Route>
       </Routes>
     </BrowserRouter>

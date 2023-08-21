@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
     
     // if not authenticated navigate to login and save the current pathname to state with name 'from'
     return (
-        isAuthenticated() ? children : <Navigate to={'/login'} state={{ from: window.location.pathname }} replace />
+        isAuthenticated() ? children : <Navigate to={'/account/login/'} state={{ from: window.location.pathname }} replace />
     )
 }
 
