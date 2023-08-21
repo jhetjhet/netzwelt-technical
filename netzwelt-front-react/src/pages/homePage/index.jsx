@@ -1,4 +1,93 @@
+import { useState } from "react";
 import "./homePage.css";
+
+/**
+ * EXPECTED NESTED TERRITORY TO BACKEND SHOULD BE:
+ *  [
+ *      {
+ *          id: number
+ *          name: string
+ *          childrens: [
+ *              {
+ *                  ...copy of this
+ *                  children: can be null or array
+ *              }
+ *              ...more here
+ *          ]
+ *      }
+ *      ...more here
+ *  ]
+ */
+
+/**
+ * component with recursion design to make it compatible with the above data (expected data)
+ */
+const NestedUL = ({ name, childrens }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const __on_caret_click__ = () => {
+        setIsOpen(!isOpen);
+    }
+
+    return (
+        <li>
+            <span
+                className={childrens ? `caret ${isOpen ? "caret-down" : ""}` : ""}
+                onClick={__on_caret_click__}
+            >{name}</span>
+            {childrens && (
+                <ul className={isOpen ? "active" : "nested"}>
+                    {childrens.map((child) => (
+                        <NestedUL
+                            id={child.id}
+                            key={child.id}
+                            name={child.name}
+                            childrens={child.childrens}
+                        />
+                    ))}
+                </ul>
+            )}
+        </li>
+    )
+}
+
+const TERRITORIES_TEMP_DATA = [
+    {
+        id: 1,
+        name: 'parent1',
+        childrens: [
+            {
+                id: 2,
+                name: 'parent2',
+                childrens: [
+                    {
+                        id: 4,
+                        name: 'parent4',
+                        childrens: [
+                            {
+                                id: 5,
+                                name: 'chilllldd',
+                                childrens: null
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: 'parent3',
+                childrens: null,
+            }
+
+        ]
+    },
+    {
+        id: 9,
+        name: 'parent9',
+        childrens: null,
+    },
+
+]
 
 const HomePage = () => {
 
@@ -7,47 +96,13 @@ const HomePage = () => {
             <h2>Territories</h2>
             <p>Here are the list of territories</p>
             <ul id="myUL">
-                <li>
-                    <span className="caret">Central Luzon</span>
-                    <ul className="nested">
-                        <li>Bulacan</li>
-                        <li>Nueva Ecija</li>
-                        <li>Pampanga</li>
-                        <li>Tarlac</li>
-                    </ul>
-                </li>
-
-                <li>
-                    <span className="caret">CALABARZON</span>
-                    <ul className="active">
-                        <li>
-                            <span className="caret">Batangas</span>
-                            <ul className="nested">
-                                <li>Lipa</li>
-                                <li>Bauan</li>
-                                <li>Sto. Tomas</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span className="caret">Cavite</span>
-                            <ul className="nested">
-                                <li>Silang</li>
-                                <li>Bacoor</li>
-                                <li>Imus</li>
-                                <li>Kawit</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span className="caret">Laguna</span>
-                            <ul className="nested">
-                                <li>Calamba</li>
-                                <li>Sta. Rosa</li>
-                                <li>San Pedro</li>
-                            </ul>
-                        </li>
-                        <li>TEMP</li>
-                    </ul>
-                </li>
+                {TERRITORIES_TEMP_DATA.map((ter) => (
+                    <NestedUL
+                        key={ter.id}
+                        name={ter.name}
+                        childrens={ter.childrens}
+                    />
+                ))}
             </ul>
         </div>
     );
