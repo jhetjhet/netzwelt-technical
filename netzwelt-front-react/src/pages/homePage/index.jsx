@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./homePage.css";
+import axios from "axios";
 
 /**
  * EXPECTED NESTED TERRITORY TO BACKEND SHOULD BE:
@@ -50,52 +51,22 @@ const NestedUL = ({ name, childrens }) => {
     )
 }
 
-const TERRITORIES_TEMP_DATA = [
-    {
-        id: 1,
-        name: 'parent1',
-        childrens: [
-            {
-                id: 2,
-                name: 'parent2',
-                childrens: [
-                    {
-                        id: 4,
-                        name: 'parent4',
-                        childrens: [
-                            {
-                                id: 5,
-                                name: 'chilllldd',
-                                childrens: null
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 3,
-                name: 'parent3',
-                childrens: null,
-            }
-
-        ]
-    },
-    {
-        id: 9,
-        name: 'parent9',
-        childrens: null,
-    },
-
-]
-
 const HomePage = () => {
+    const [territories, setTerritories] = useState([]);
+
+    useEffect(() => {
+        // fetch territories lists from backend
+        axios.get('http://localhost:8080/territories/').then((resp) => {
+            setTerritories(resp.data);
+        });
+    }, []);
 
     return (
         <div>
             <h2>Territories</h2>
             <p>Here are the list of territories</p>
             <ul id="myUL">
-                {TERRITORIES_TEMP_DATA.map((ter) => (
+                {territories.map((ter) => (
                     <NestedUL
                         key={ter.id}
                         name={ter.name}
