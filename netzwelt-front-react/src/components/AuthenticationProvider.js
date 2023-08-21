@@ -11,10 +11,15 @@ export const useAuthenticationContext = () => {
 const AuthenticationProvider = ({ children }) => {
     /**
      * for this authentication system logout is not implemented
+     * to save session of signing in we save the isAuthenticated boolean to localStorage
+     * 
+     * The user will forever be logged in until it closes this web tab.
+     * 
+     * User object is not also used for this setup
      */
+    const IS_AUTHENTICATED_KEY = 'is_authenticated';
 
     const [user, setUser] = useState();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const login = async (username, password, cb) => { // cb ~ callback
         try {
@@ -24,11 +29,15 @@ const AuthenticationProvider = ({ children }) => {
             });
 
             setUser(data);
-            setIsAuthenticated(true);
+            sessionStorage.setItem(IS_AUTHENTICATED_KEY, true);
             cb && cb(data, null); // if successful return user data with null error
         } catch (error) {
             cb && cb(null, error); // else return null user data and the error
         }
+    }
+
+    function isAuthenticated() {
+        return Boolean(sessionStorage.getItem(IS_AUTHENTICATED_KEY));
     }
 
     return (
