@@ -7,10 +7,9 @@ import "./homePage.css";
  *      {
  *          id: number
  *          name: string
- *          childrens: [
+ *          childrens: [ // this property only exists if it has childrens
  *              {
- *                  ...copy of this
- *                  children: can be null or array
+ *                  ...copy of object
  *              }
  *              ...more here
  *          ]
