@@ -1,4 +1,6 @@
 const { default: axios } = require('axios');
+const cors = require('cors')
+
 const express = require('express');
 const { arrangeTerritoriesByParent } = require('./util');
 
@@ -6,6 +8,7 @@ const app = express();
 
 const PORT = 8080
 
+app.use(cors()); // default allow all
 app.use(express.json());
 
 app.post('/signIn/', async (req, res) => {
@@ -23,7 +26,6 @@ app.get('/territories/', async (req, res, next) => {
         
         let arrangedTerritories = [];
         arrangeTerritoriesByParent(resp.data.data, arrangedTerritories);
-
         return res.json(arrangedTerritories);
     } catch (error) {
         next(error);
