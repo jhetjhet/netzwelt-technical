@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./loginPage.css";
+import { useAuthenticationContext } from "../../components/AuthenticationProvider";
 
 const LoginPage = () => {
     const DEFAULT_AUTH_DATA = {
@@ -8,10 +9,12 @@ const LoginPage = () => {
     }
 
     const [authData, setAuthData] = useState({...DEFAULT_AUTH_DATA});
+    
+    const { login } = useAuthenticationContext();
 
     const __on_submit__ = (e) => {
         e.preventDefault();
-        console.log(authData);
+        login(authData.username, authData.password);
     }
 
     const __on_change__ = (e) => {
