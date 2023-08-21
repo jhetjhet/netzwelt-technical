@@ -2,6 +2,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import HomePage from "./pages/homePage";
 import AuthenticationProvider from "./components/AuthenticationProvider";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -12,8 +13,16 @@ function App() {
             <Outlet />
           </AuthenticationProvider>
         }>
-          <Route element={<HomePage />} path="/" />
-          <Route element={<HomePage />} path="/home/index/" />
+          <Route element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          } path="/" />
+          <Route element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          } path="/home/index/" />
           <Route element={<LoginPage />} path="/login/" />
         </Route>
       </Routes>

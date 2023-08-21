@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./loginPage.css";
 import { useAuthenticationContext } from "../../components/AuthenticationProvider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
     const DEFAULT_AUTH_DATA = {
@@ -10,11 +11,25 @@ const LoginPage = () => {
 
     const [authData, setAuthData] = useState({...DEFAULT_AUTH_DATA});
     
-    const { login } = useAuthenticationContext();
+    const { login } = useAuthenticationContext() ;
+
+    const location = useLocation();
+
+    const navigate = useNavigate();
 
     const __on_submit__ = (e) => {
         e.preventDefault();
-        login(authData.username, authData.password);
+        login(authData.username, authData.password, (data, err) => {
+            if(!err) {
+                let from = "/";
+                if(location.state && location.state.from) { // check if there is a state of 'from'
+                    from = location.state.from;
+                }
+
+                // redirect to homepage or to previous link
+                navigate(from, { replace: true });
+            }
+        });
     }
 
     const __on_change__ = (e) => {
